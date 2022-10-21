@@ -1,0 +1,32 @@
+server:
+  port: 8000
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/test_database
+    username: postgres
+    password: sanho0601
+
+  sql:
+    init:
+      mode: always
+      platform: postgresql
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+        #        show_sql: true
+      #        format_sql: true
+    show-sql: true
+    generate-ddl: true
+
+jwt:
+  header : Authoization
+  secret : eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsInZlcnNpb24iOnRydWV9eyJpc3MiOiJEaW5vQ2hpZXNhLmdpdGh1Yi5pbyIsInN1YiI6InNoZW5pcXVhIiwiYXVkIjoiYXJ5YSIsImlhdCI6MTY2NjI0NDA0NCwiZXhwIjoxNjY2MjQ0NjQ0fQnSRXO02IMI2ivPz7BCfnKkACPbP6QMn8gfV2wNmRGz6Wn1vav76S4Op9xRs4XjdeJ03p2L2J0mLqXiA6EdLFAqTgmNHwSIAINLRjaeVrAxieTvKP4YjJI8hPHUSgsd4u58CVO9pqZXIZ66qpxk2rW3Mvk54SeKTsXNxZWMryYo7uLsxUhkZSTvHfmuS7dd6F5zLHmXpNPNLbKuAUV3eWwtTvoy0A62hnqklRRm2E9MEaxWPwRJpjIGBXcVk6BdI0cFgqb4kortbkUaxtQhiiXcaJGI47LW3As6DHds4Az8qgZH4K5kxXABKW3BSHkQ9qHUByNPoEMqUaTxQ
+  token-validity-in-seconds: 86400

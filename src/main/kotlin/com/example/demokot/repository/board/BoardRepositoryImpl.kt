@@ -1,15 +1,16 @@
 package com.example.demokot.repository.board
 
-import com.example.demokot.domain.dto.request.BoardModifyRequestDTO
+import com.example.demokot.domain.dto.request.Community.BoardModifyRequestDTO
 import com.example.demokot.domain.dto.response.BoardDTO
 import com.example.demokot.domain.dto.response.QBoardDTO
-import com.example.demokot.domain.entity.sample.Board
-import com.example.demokot.domain.entity.sample.QBoard.board
-import com.example.demokot.domain.entity.sample.QUser.user
+import com.example.demokot.domain.entity.User.QUser.user
+import com.example.demokot.domain.entity.community.Board
+import com.example.demokot.domain.entity.community.QBoard.board
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 class BoardRepositoryImpl : BoardRepository {
@@ -51,6 +52,7 @@ class BoardRepositoryImpl : BoardRepository {
             )
         ).from(board)
             .where(board.id.eq(board_id))
+            .innerJoin(board.user, user)
             .fetchFirst()
     }
 
@@ -58,7 +60,7 @@ class BoardRepositoryImpl : BoardRepository {
     /** 작성글 삭제하기  **/
     override fun deleteBoard(userId: Long, board_id: Long): Boolean {
         return queryFactory.delete(board)
-            .where(board.id.`in`(board_id))
+            .where(board.id.`in`(board_id), board.user.userId.eq(userId))
             .execute() == 1L
     }
 
@@ -70,6 +72,8 @@ class BoardRepositoryImpl : BoardRepository {
             .where(board.user.userId.eq(dto.userId))
             .set(board.title, dto.title)
             .set(board.content, dto.content)
+            .set(board.modifiedAt, LocalDateTime.now())
             .execute() == 1L
     }
 }
+

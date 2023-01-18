@@ -1,6 +1,7 @@
-package com.example.demokot.domain.entity.sample
+package com.example.demokot.domain.entity.community
 
-import com.example.demokot.domain.dto.request.BoardRegisterRequestDTO
+import com.example.demokot.domain.dto.request.Community.BoardRegisterRequestDTO
+import com.example.demokot.domain.entity.User.User
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -35,9 +36,11 @@ class Board(
 ) {
 
     constructor(dto: BoardRegisterRequestDTO) : this(
+        id = dto.boardId,
         title = dto.title,
         content = dto.content,
-        user = User(dto.userId)
+        user = User(dto.userId),
+        createdAt = dto.createdAtDate
     )
 
 

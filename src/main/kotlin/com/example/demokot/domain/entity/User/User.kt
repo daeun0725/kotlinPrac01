@@ -1,4 +1,4 @@
-package com.example.demokot.domain.entity.sample
+package com.example.demokot.domain.entity.User
 
 import com.example.demokot.domain.dto.request.UserDto
 import javax.persistence.*

@@ -1,6 +1,6 @@
 package com.example.demokot.domain.dto.request
 
-import com.example.demokot.domain.entity.sample.User
+import com.example.demokot.domain.entity.User.User
 import com.querydsl.core.annotations.QueryProjection
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size

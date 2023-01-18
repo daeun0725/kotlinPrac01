@@ -1,4 +1,4 @@
-package com.example.demokot.domain.dto.request
+package com.example.demokot.domain.dto.request.Community
 
 import java.time.LocalDateTime
 

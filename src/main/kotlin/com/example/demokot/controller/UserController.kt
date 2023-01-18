@@ -1,11 +1,9 @@
 package com.example.demokot.controller
 
 import com.example.demokot.domain.dto.request.UserDto
-import com.example.demokot.domain.entity.sample.User
 import com.example.demokot.service.User.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import java.io.IOException
 import javax.persistence.EntityManager

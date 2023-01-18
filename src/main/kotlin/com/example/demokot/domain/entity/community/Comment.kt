@@ -1,6 +1,7 @@
-package com.example.demokot.domain.entity.sample
+package com.example.demokot.domain.entity.community
 
-import com.example.demokot.domain.dto.request.CommentRequestDTO
+import com.example.demokot.domain.dto.response.CommentResponseDTO
+import com.example.demokot.domain.entity.User.User
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -38,9 +39,13 @@ class Comment(
     val parentComment: Comment? = null,
 ) {
 
-    constructor(dto: CommentRequestDTO) : this(
+    constructor(dto: CommentResponseDTO) : this(
+
+        id = dto.commentId,
         content = dto.comment,
         user = User(dto.userId),
-        board = Board(dto.boardId)
+        board = Board(dto.boardId),
+        createdAt = dto.createdDate
+
     )
 }

@@ -1,4 +1,4 @@
-package com.example.demokot.domain.entity.sample
+package com.example.demokot.domain.entity.User
 
 import javax.persistence.*
 

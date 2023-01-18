@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration sacn="true" scanPeriod="60 seconds">
+    <!-- 60초마다 설정 파일의 변경을 스캔 -->
+
+    <springProfile name="sophie">
+        <property resource="logback-sophie.properties"/>
+    </springProfile>
+
+    <property name="LOG_PATH" value="${logPath}"/>
+
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%d{MM-dd HH:mm:ss.SSS} %highlight(%-5level) %magenta(%-4relative) --- [ %thread{10}] [%logger{36}]: %msg%n"/>
+    <!--로그 패턴 정의-->
+    <property name="FILE_NAME" value="log-test-logs"/>
+    <!--상수 값 정의-->
+
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--FILE 이라는 이름의 로그 형태 정의, class - 특정 시간 또는 크기를 기준으로 로그 파일을 생성 -->
+        <!--error 레벨만 필터링 다른 레벨은 무시-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!--생성할 로그 파일 경로 + 이름-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+        <!--파일 생성 정책 - 시간 기준 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--파일 생성 정책 - 시간 기준 -->
+            <fileNamePattern>${LOG_PATH}/${FILE_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <!--파일 최대 보관 기간 (90일) -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 크기별 로그 파일 생성 -->
+                <maxFileSize>10MB</maxFileSize>
+                <!-- logback-sophie.properties 에 정의한 최대 maxFileSize(10Mb) 만큼 마다 로그파일을 생성-->
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--CONSOLE 이라는 이름의 로그 형태 정의, class - 콘솔에 로그를 찍음-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--출력할 로그 인코더 설정 (PatternLayoutEncoder 는 default 설정이라 생략가능) -->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <!--위의 property 로 정의한 콘솔 로그 패턴으로 출력-->
+        </encoder>
+    </appender>
+
+
+    <springProfile name="sophie">
+        <root level="ERROR">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </root>
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+
+</configuration>

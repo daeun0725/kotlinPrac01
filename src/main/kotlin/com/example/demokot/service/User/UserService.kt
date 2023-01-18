@@ -2,8 +2,8 @@ package com.example.demokot.service.User
 
 import com.example.demokot.domain.dto.request.UserDto
 import com.example.demokot.domain.dto.request.UserDto.Companion.from
-import com.example.demokot.domain.entity.sample.Authority
-import com.example.demokot.domain.entity.sample.User
+import com.example.demokot.domain.entity.User.Authority
+import com.example.demokot.domain.entity.User.User
 import com.example.demokot.exception.DuplicateMemberException
 import com.example.demokot.exception.NotFoundMemberException
 import com.example.demokot.repository.User.UserRepository

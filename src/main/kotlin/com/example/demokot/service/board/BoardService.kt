@@ -1,9 +1,9 @@
 package com.example.demokot.service.board
 
-import com.example.demokot.domain.dto.request.BoardModifyRequestDTO
-import com.example.demokot.domain.dto.request.BoardRegisterRequestDTO
+import com.example.demokot.domain.dto.request.Community.BoardModifyRequestDTO
+import com.example.demokot.domain.dto.request.Community.BoardRegisterRequestDTO
 import com.example.demokot.domain.dto.response.BoardDTO
-import com.example.demokot.domain.entity.sample.Board
+import com.example.demokot.domain.entity.community.Board
 import org.springframework.data.domain.Pageable
 
 interface BoardService {

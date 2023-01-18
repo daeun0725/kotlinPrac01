@@ -1,11 +1,11 @@
 package com.example.demokot.controller
 
-import com.example.demokot.domain.dto.request.BoardModifyRequestDTO
-import com.example.demokot.domain.dto.request.BoardRegisterRequestDTO
-import com.example.demokot.domain.dto.request.MyResponse
-import com.example.demokot.domain.dto.request.MyResponse.Companion.getResponse
+import com.example.demokot.domain.dto.request.Community.BoardModifyRequestDTO
+import com.example.demokot.domain.dto.request.Community.BoardRegisterRequestDTO
+import com.example.demokot.domain.dto.response.MyResponse
+import com.example.demokot.domain.dto.response.MyResponse.Companion.getResponse
 import com.example.demokot.domain.dto.response.BoardDTO
-import com.example.demokot.domain.entity.sample.Board
+import com.example.demokot.domain.entity.community.Board
 import com.example.demokot.service.board.BoardService
 import io.swagger.v3.oas.annotations.Parameter
 import org.springframework.data.domain.Pageable
@@ -30,7 +30,6 @@ class BoardController(
 
         return getResponse(boardList)
     }
-
 
     /**  게시판 상세 **/
     @GetMapping("/detailBoard")
@@ -66,9 +65,10 @@ class BoardController(
     /**  게시판 글 삭제 **/
     @DeleteMapping("/deleteBoard")
     fun deleteBoard(
-        @RequestBody dto: BoardDTO,
+        @RequestParam board_id: Long,
+        @RequestParam userId: Long,
     ): ResponseEntity<MyResponse<Boolean>> {
-        val result = boardService.deleteBoard(dto.userId)
+        val result = boardService.deleteBoard(board_id, userId)
         return getResponse(result)
     }
 

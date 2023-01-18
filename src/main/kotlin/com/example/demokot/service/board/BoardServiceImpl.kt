@@ -1,9 +1,9 @@
 package com.example.demokot.service.board
 
-import com.example.demokot.domain.dto.request.BoardModifyRequestDTO
-import com.example.demokot.domain.dto.request.BoardRegisterRequestDTO
+import com.example.demokot.domain.dto.request.Community.BoardModifyRequestDTO
+import com.example.demokot.domain.dto.request.Community.BoardRegisterRequestDTO
 import com.example.demokot.domain.dto.response.BoardDTO
-import com.example.demokot.domain.entity.sample.Board
+import com.example.demokot.domain.entity.community.Board
 import com.example.demokot.repository.board.BoardRepository
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -52,8 +52,8 @@ class BoardServiceImpl(
     override fun deleteBoard(userId:Long, board_id: Long): Boolean {
         val isDeleted = boardRepository.deleteBoard(userId,board_id)
         if (!isDeleted) {
-            val boardCreateUserId = boardRepository.findBoardCreateUserId(board_id) ?: throw Exception(" Not exsit post!")
-        if( boardCreateUserId != userId) throw Exception(" no authorized")
+            val boardCreateUserId = boardRepository.findBoardCreateUserId(board_id) ?: throw Exception(" 존재하지않는 글입니다")
+        if( boardCreateUserId != userId) throw Exception(" 삭제 권환이 없습니다. ")
         }
         return isDeleted
     }

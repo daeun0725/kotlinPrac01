@@ -1,6 +1,6 @@
 package com.example.demokot.domain.dto.request
 
-import com.example.demokot.domain.entity.sample.Authority
+import com.example.demokot.domain.entity.User.Authority
 
 data class AuthorityDto(
     var authorityName: String? = null

@@ -1,6 +1,6 @@
 package com.example.demokot.repository.User
 
-import com.example.demokot.domain.entity.sample.User
+import com.example.demokot.domain.entity.User.User
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*

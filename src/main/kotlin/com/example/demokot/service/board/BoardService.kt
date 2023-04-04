@@ -8,24 +8,40 @@ import org.springframework.data.domain.Pageable
 
 interface BoardService {
 
+    /**
+     * 제목 내용으로 검색
+     * */
+    fun searchBoards(keyword: String?): List<BoardDTO>
 
-    /**  조회 **/
+
+    /**
+     *게시글 리스트 조회
+     **/
     fun boardList(pageable: Pageable): List<Board>
 
-    /** 상세  **/
-    fun detailBoard(board_id: Long): BoardDTO
+
+    /**
+     *게시글 상세 조회
+     **/
+    fun findDetailBoard(boardId: Long): BoardDTO
 
 
-    /** 작성 **/
+    /**
+     *게시글 작성
+     **/
     fun postBoard(dto: BoardRegisterRequestDTO): Long?
 
 
-    /** 수정 **/
+    /**
+     *게시글 수정
+     **/
     fun editBoard(dto: BoardModifyRequestDTO): Boolean
 
 
-    /** 삭제 **/
-    fun deleteBoard(userId:Long, board_id: Long): Boolean
+    /**
+     *삭제
+     **/
+    fun deleteBoard(userId:Long, boardId: Long): Boolean
 }
 
 

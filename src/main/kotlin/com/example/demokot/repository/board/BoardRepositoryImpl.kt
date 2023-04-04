@@ -18,6 +18,31 @@ class BoardRepositoryImpl : BoardRepository {
     @Autowired
     lateinit var queryFactory: JPAQueryFactory
 
+
+    /**
+     * 게시글 검색
+     */
+    override fun searchBoards(keyword: String?): List<BoardDTO> {
+        return queryFactory.select(
+                QBoardDTO(
+                        board.id,
+                        board.title,
+                        board.content,
+                        board.createdAt,
+                        board.modifiedAt,
+                        user.userId
+                )
+        ).from(board)
+                .where(
+                        board.title.containsIgnoreCase(keyword),
+                        board.content.containsIgnoreCase(keyword)
+                )
+                .orderBy(board.createdAt.desc())
+                .fetch()
+    }
+
+
+
     /** 리스트 전체 조회 **/
     override fun boardList(pageable: Pageable): List<Board> {
         return queryFactory.select(board)
@@ -31,16 +56,16 @@ class BoardRepositoryImpl : BoardRepository {
 
 
     /**게시글 작성자 조회**/
-    override fun findBoardCreateUserId(board_id: Long): Long? {
+    override fun findBoardCreateUserId(boardId: Long): Long? {
         return queryFactory.select(board.user.userId)
             .from(board)
-            .where(board.id.eq(board_id))
+            .where(board.id.eq(boardId))
             .fetchFirst()
     }
 
 
     /** 작성글 상세 보기 **/
-    override fun detailBoard(board_id: Long): BoardDTO? {
+    override fun findDetailBoard(boardId: Long): BoardDTO? {
         return queryFactory.select(
             QBoardDTO(
                 board.id,
@@ -51,21 +76,25 @@ class BoardRepositoryImpl : BoardRepository {
                 user.userId
             )
         ).from(board)
-            .where(board.id.eq(board_id))
+            .where(board.id.eq(boardId))
             .innerJoin(board.user, user)
             .fetchFirst()
     }
 
 
-    /** 작성글 삭제하기  **/
-    override fun deleteBoard(userId: Long, board_id: Long): Boolean {
+    /**
+     *작성글 삭제하기
+     **/
+    override fun deleteBoard(userId: Long, boardId: Long): Boolean {
         return queryFactory.delete(board)
-            .where(board.id.`in`(board_id), board.user.userId.eq(userId))
+            .where(board.id.`in`(boardId), board.user.userId.eq(userId))
             .execute() == 1L
     }
 
 
-    /**  작성글 수정하기  **/
+    /**
+     * 작성글 수정하기
+     **/
     override fun editBoard(dto: BoardModifyRequestDTO): Boolean {
         return queryFactory.update(board)
             .where(board.id.eq(dto.board_id))

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
+import javax.persistence.Id
 
 
 @Service
@@ -18,17 +19,34 @@ class BoardServiceImpl(
     val em: EntityManager
 ) : BoardService {
 
-    /**  작성글 리스트 조회   **/
+
+    /**
+     * 게시글 키워드 검색 조회
+     **/
+
+    override fun searchBoards(keyword: String?): List<BoardDTO> {
+        return boardRepository.searchBoards(keyword)
+    }
+
+    /**
+     * 작성글 리스트 조회
+     **/
     override fun boardList(pageable: Pageable): List<Board> {
         return boardRepository.boardList(pageable)
     }
 
-    /**  작성글 상세 조회   **/
-    override fun detailBoard(board_id: Long): BoardDTO {
-        return boardRepository.detailBoard(board_id) ?: throw Exception("board 아이디 잘못 조회")
+    /**
+     * 작성글 상세조회
+     **/
+    override fun findDetailBoard(boardId: Long): BoardDTO {
+        val findDetailBoard = boardRepository.findDetailBoard(boardId) ?: throw Exception("board 아이디 잘못 조회")
+
+        return findDetailBoard
     }
 
-    /**  작성글 작성   **/
+    /**
+     작성글 작성
+     **/
     @Transactional
     override fun postBoard(dto: BoardRegisterRequestDTO): Long? {
         val board = Board(dto)
@@ -37,7 +55,10 @@ class BoardServiceImpl(
         return board.id
     }
 
-    /**  작성글 수정  **/
+
+    /**
+     *  작성글 수정
+     **/
     @Transactional
     override fun editBoard(dto: BoardModifyRequestDTO): Boolean {
         val result = boardRepository.editBoard(dto)
@@ -47,7 +68,9 @@ class BoardServiceImpl(
     }
 
 
-    /**  작성글 삭제  **/
+    /**
+     *  작성글 삭제
+     **/
     @Transactional
     override fun deleteBoard(userId:Long, board_id: Long): Boolean {
         val isDeleted = boardRepository.deleteBoard(userId,board_id)

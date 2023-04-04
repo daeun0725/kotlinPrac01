@@ -9,4 +9,6 @@ class BoardRegisterRequestDTO (
     var boardId: Long,
     var createdAtDate: LocalDateTime
 ) {
+
+
 }

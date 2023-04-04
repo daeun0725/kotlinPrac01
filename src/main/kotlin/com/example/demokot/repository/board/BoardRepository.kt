@@ -7,22 +7,40 @@ import org.springframework.data.domain.Pageable
 
 interface BoardRepository {
 
-    /** 게시글조회 **/
+    /**
+     * 게시글 검색
+     */
+
+    fun searchBoards(keyword: String?): List<BoardDTO>
+
+
+    /**
+     *  게시글 리스트 조회
+     **/
     fun boardList(pageable: Pageable): List<Board>
 
-    /** 게시글 상세 **/
-    fun detailBoard(board_id:Long): BoardDTO?
+
+    /**
+     *  게시글 상세조회
+     **/
+    fun findDetailBoard(board_id:Long): BoardDTO?
 
 
-    /** 게시글 수정 **/
+    /**
+     * 게시글 수정
+     **/
     fun editBoard(dto: BoardModifyRequestDTO):Boolean
 
 
 
-    /** 게시글 삭제 **/
-    fun deleteBoard(userId: Long, board_id: Long):Boolean
+    /**
+     * 게시글 삭제
+     **/
+    fun deleteBoard(userId: Long, boardId: Long):Boolean
 
 
-    /**게시글 작성자 조회 **/
-    fun findBoardCreateUserId(board_id: Long):Long?
+    /**
+     * 게시글 작성자 조회
+     **/
+    fun findBoardCreateUserId(boardId: Long):Long?
 }

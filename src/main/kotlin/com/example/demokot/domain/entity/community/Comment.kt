@@ -17,11 +17,11 @@ class Comment(
 
     @JoinColumn(name = "board_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    val board: Board? = null,
+    val boardId: Board? = null,
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    var user: User? = null,
+    var userId: User? = null,
 
     @Column(columnDefinition = "TEXT", nullable = false)
     val content: String? = null,
@@ -43,8 +43,8 @@ class Comment(
 
         id = dto.commentId,
         content = dto.comment,
-        user = User(dto.userId),
-        board = Board(dto.boardId),
+        userId = User(dto.userId),
+        boardId = Board(dto.boardId),
         createdAt = dto.createdDate
 
     )
